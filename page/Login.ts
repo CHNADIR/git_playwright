@@ -36,4 +36,8 @@ export class Login{
         await this.elements.CreerCompteButton().click()
     }
 
+    async clickSuivantButton(){
+        await this.elements.CreerCompteButton().click()
+    }
+
 }    

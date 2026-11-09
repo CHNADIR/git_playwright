@@ -12,7 +12,6 @@ export class HomePage {
         signUpButton: ()=>this.page.getByRole("link", {name:"Se connecter"})
     }
 
-    
     async clickSignUp(){
         await this.elements.signUpButton().click()
     }
