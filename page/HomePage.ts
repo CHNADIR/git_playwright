@@ -9,11 +9,11 @@ export class HomePage {
 
     // definir le locator de la page login
     elements = {
-        signUpButton: ()=>this.page.getByRole("paragraph").nth(0)
+        signUpButton: ()=>this.page.getByRole("link", {name:"Se connecter"})
     }
 
     
-    async addBtn(){
+    async clickSignUp(){
         await this.elements.signUpButton().click()
     }
 
