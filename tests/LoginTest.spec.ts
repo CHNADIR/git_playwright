@@ -4,33 +4,33 @@ import { HomePage } from "../page/HomePage"
 import { Annonce } from "../page/Annonce"
 
 
-let lp : Login
-let hp : HomePage
-let ap : Annonce
+let lp: Login
+let hp: HomePage
+let ap: Annonce
 
-test.beforeEach("setup", async({page})=>{
-    await page.goto("/login$/")
+test.beforeEach("setup", async ({ page }) => {
     lp = new Login(page)
     hp = new HomePage(page)
     ap = new Annonce(page)
+    await page.goto("https://app.thrundrz.com/")
     await hp.clickSignUp()
-    await expect(page).toHaveURL("/login$/")
+    await expect(page).toHaveURL("https://app.thrundrz.com/login")
     await lp.saisirEmail("zn@gmail.com")
     await lp.saisirMdp("123456789")
     await lp.clickButton()
 })
 
-test("Login",async({page})=>{
-    await expect(page).toHaveURL("/\/EspaceClient\/explorer$/")
+test("ajoutAnnonce", async ({ page }) => {
+    await expect(page).toHaveURL("https://app.thrundrz.com/EspaceClient/explorer")
     //ajouter une annonce
     await ap.AnnonceButton()
     //verifier l'url annonce/new
-    await expect(page).toHaveURL("/\/EspaceClient\/annonces\/new$/")
+    await expect(page).toHaveURL("https://app.thrundrz.com/EspaceClient/annonces/new")
     //verifier l'etape 1 est bleu
     expect(await ap.getCouleurCercle(1)).toBe("rgb(21, 101, 192)");
     //ajouter une image
-    await expect(page).toHaveScreenshot('maquette.png');
+    await ap.ajouterImage("image/maquette-chromium-win32.png");
     //cliquer sur suivant
     await ap.clickSuivantButton()
-    
+
 })
