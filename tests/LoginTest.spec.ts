@@ -21,6 +21,10 @@ test.beforeEach("setup", async ({ page }) => {
 })
 
 test("ajoutAnnonce", async ({ page }) => {
+
+    await expect(page).toHaveURL("https://app.thrundrz.com/EspaceClient/explorer")
+    
+
     await expect(page).toHaveURL("https://app.thrundrz.com/EspaceClient/explorer")
     //ajouter une annonce
     await ap.AnnonceButton()
@@ -32,5 +36,20 @@ test("ajoutAnnonce", async ({ page }) => {
     await ap.ajouterImage("image/maquette-chromium-win32.png");
     //cliquer sur suivant
     await ap.clickSuivantButton()
+    //l'etape 2 en bleu
+    await page.waitForTimeout(1000);
+    expect(await ap.getCouleurCercle(2)).toBe("rgb(21, 101, 192)");
+    //remplir les champs : titre, description 
+    await ap.saisirTitre("test001")
+    await ap.saisirDesc("description test ...")
+    //select type d'embarc et categorie
+    await ap.typeDEmbarcation()
+    await ap.categorie()
+    //nbr place [1, 10] et année de construction [1990, 2026]
+    await ap.saisirNbrPlaces()
+    await ap.saisirAnneeConstruction
+    //cliquer sur le btn suivant
+    await ap.clickSuivantButton()
+
 
 })
