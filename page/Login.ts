@@ -9,8 +9,8 @@ export class Login{
     
     //Définir les locators de la page login
     elements={
-        Email: ()=> this.page.getByRole("textbox",{name:"votre@email.com"}),
-        MotDePasse: ()=> this.page.getByRole("textbox",{name:"********"}),
+        Email: ()=> this.page.getByRole("textbox",{name:"Email"}),
+        MotDePasse: ()=> this.page.getByRole("textbox",{name:"Mot de passe"}),
         CreerCompteButton: ()=> this.page.getByRole("button",{name:"Se Connecter"}),
         AlertMessage: ()=> this.page.getByRole("alert"),
         SouviensDeMoi: ()=> this.page.getByRole("checkbox",{name:"Souviens-toi de moi"}),
@@ -33,6 +33,10 @@ export class Login{
     }
 
     async clickButton(){
+        await this.elements.CreerCompteButton().click()
+    }
+
+    async clickSuivantButton(){
         await this.elements.CreerCompteButton().click()
     }
 

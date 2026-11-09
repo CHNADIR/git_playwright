@@ -1,14 +1,18 @@
 import { test, expect } from "@playwright/test"
 import { Login } from "../page/Login"
 import { HomePage } from "../page/HomePage"
+import { Annonce } from "../page/Annonce"
 
-let lp : Login
-let hp : HomePage
 
-test.beforeEach("setup", async({page})=>{
-    await page.goto("https://app.thrundrz.com/login")
+let lp: Login
+let hp: HomePage
+let ap: Annonce
+
+test.beforeEach("setup", async ({ page }) => {
     lp = new Login(page)
     hp = new HomePage(page)
+    ap = new Annonce(page)
+    await page.goto("https://app.thrundrz.com/")
     await hp.clickSignUp()
     await expect(page).toHaveURL("https://app.thrundrz.com/login")
     await lp.saisirEmail("zn@gmail.com")
@@ -16,18 +20,36 @@ test.beforeEach("setup", async({page})=>{
     await lp.clickButton()
 })
 
-test("Login",async({page})=>{
+test("ajoutAnnonce", async ({ page }) => {
+
+    await expect(page).toHaveURL("https://app.thrundrz.com/EspaceClient/explorer")
+    
 
     await expect(page).toHaveURL("https://app.thrundrz.com/EspaceClient/explorer")
     //ajouter une annonce
+    await ap.AnnonceButton()
     //verifier l'url annonce/new
+    await expect(page).toHaveURL("https://app.thrundrz.com/EspaceClient/annonces/new")
     //verifier l'etape 1 est bleu
+    expect(await ap.getCouleurCercle(1)).toBe("rgb(21, 101, 192)");
     //ajouter une image
+    await ap.ajouterImage("image/maquette-chromium-win32.png");
     //cliquer sur suivant
+    await ap.clickSuivantButton()
     //l'etape 2 en bleu
-    
+    await page.waitForTimeout(1000);
+    expect(await ap.getCouleurCercle(2)).toBe("rgb(21, 101, 192)");
     //remplir les champs : titre, description 
+    await ap.saisirTitre("test001")
+    await ap.saisirDesc("description test ...")
     //select type d'embarc et categorie
+    await ap.typeDEmbarcation()
+    await ap.categorie()
     //nbr place [1, 10] et année de construction [1990, 2026]
+    await ap.saisirNbrPlaces()
+    await ap.saisirAnneeConstruction
     //cliquer sur le btn suivant
+    await ap.clickSuivantButton()
+
+
 })
